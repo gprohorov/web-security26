@@ -19,4 +19,9 @@ public class Item {
     private String id;
     private String name;
     private String description;
+
+    public Item(String description, String name) {
+        this.description = description;
+        this.name = name;
+    }
 }

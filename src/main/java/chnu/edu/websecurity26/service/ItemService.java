@@ -25,11 +25,13 @@ public class ItemService {
         items.add(new Item("3", "name3", "description3"));
     }
 
-    public List<Item> getAllItems() {
+   public List<Item> getAllItems() {
         return items;
     }
+
    public Item createItem(Item item){
        items.add(item);
+       System.out.println(items.size());
        return item;
    }
 
@@ -43,7 +45,7 @@ public class ItemService {
         Item oldItem = getItem(item.getId());
         items.remove(oldItem);
         items.add(item);
-        return oldItem;
+        return item;
    }
 
    public void deleteItem(String id){
