@@ -10,13 +10,20 @@ package chnu.edu.websecurity26.service;
 */
 
 import chnu.edu.websecurity26.model.Item;
+import chnu.edu.websecurity26.repository.ItemRepository;
+import jakarta.annotation.PostConstruct;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class ItemService {
+
+    private final ItemRepository itemRepository;
+
     private List<Item> items = new ArrayList<>();
 
     {
@@ -25,31 +32,29 @@ public class ItemService {
         items.add(new Item("3", "name3", "description3"));
     }
 
+    @PostConstruct
+    void init(){{
+        itemRepository.saveAll(items);
+    }
+    }
+
    public List<Item> getAllItems() {
-        return items;
+        return itemRepository.findAll();
     }
 
    public Item createItem(Item item){
-       items.add(item);
-       System.out.println(items.size());
-       return item;
+      return itemRepository.save(item);
    }
 
    public Item getItem(String id){
-        return items.stream()
-                .filter(item -> item.getId().equals(id))
-                .findFirst().orElse(null);
+        return itemRepository.findById(id).orElse(null);
    }
 
    public Item updateItem(Item item){
-        Item oldItem = getItem(item.getId());
-        items.remove(oldItem);
-        items.add(item);
-        return item;
+       return itemRepository.save(item);
    }
 
    public void deleteItem(String id){
-        Item item = getItem(id);
-        items.remove(item);
+        itemRepository.deleteById(id);
    }
 }

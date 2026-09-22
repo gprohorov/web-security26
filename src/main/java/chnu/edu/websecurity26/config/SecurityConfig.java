@@ -1,0 +1,32 @@
+package chnu.edu.websecurity26.config;
+
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.web.SecurityFilterChain;
+
+/*
+  @author   george
+  @project   web-security26
+  @class  SecurityConfig
+  @version  1.0.0 
+  @since 22/09/2026 - 12.16
+*/
+@Configuration
+public class SecurityConfig {
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+
+        http
+              //  .csrf(csrf ->csrf.disable())
+                .csrf(AbstractHttpConfigurer::disable)
+                .authorizeHttpRequests( auth ->
+                        auth.anyRequest().authenticated())
+                .httpBasic(Customizer.withDefaults());
+
+        return http.build();
+    }
+}

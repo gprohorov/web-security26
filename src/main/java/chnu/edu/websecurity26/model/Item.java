@@ -2,6 +2,7 @@ package chnu.edu.websecurity26.model;
 
 
 import lombok.*;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 /*
   @author   george
@@ -11,11 +12,14 @@ import lombok.*;
   @since 02/09/2026 - 21.08
 */
 @Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @ToString
-public class Item {
+@Document
+public class Item extends AuditMetadata{
     private String id;
     private String name;
     private String description;
