@@ -44,8 +44,6 @@ public class ItemService {
     }
 
    public Item createItem(Item item){
-//item.setCreatedBy("George");
-
         return itemRepository.save(item);
    }
 
@@ -54,7 +52,13 @@ public class ItemService {
    }
 
    public Item updateItem(Item item){
-       return itemRepository.save(item);
+       Item existing = itemRepository.findById(item.getId()).orElse(null);
+       if (existing != null) {
+           existing.setName(item.getName());
+           existing.setDescription(item.getDescription());
+           return itemRepository.save(existing);
+       }
+       return null;
    }
 
    public void deleteItem(String id){
