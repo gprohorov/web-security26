@@ -33,9 +33,10 @@ public class ItemService {
     }
 
     @PostConstruct
-    void init(){{
-        itemRepository.saveAll(items);
-    }
+    void init(){
+        itemRepository.deleteAll();
+      items.forEach(this::createItem);
+
     }
 
    public List<Item> getAllItems() {
@@ -43,7 +44,9 @@ public class ItemService {
     }
 
    public Item createItem(Item item){
-      return itemRepository.save(item);
+//item.setCreatedBy("George");
+
+        return itemRepository.save(item);
    }
 
    public Item getItem(String id){

@@ -2,6 +2,7 @@ package chnu.edu.websecurity26.model;
 
 
 import lombok.*;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 /*
@@ -19,7 +20,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Builder
 @ToString
 @Document
-public class Item extends AuditMetadata{
+public class Item extends Auditable {
+    @Id
     private String id;
     private String name;
     private String description;
@@ -27,5 +29,18 @@ public class Item extends AuditMetadata{
     public Item(String description, String name) {
         this.description = description;
         this.name = name;
+    }
+
+
+    @Override
+    public final boolean equals(Object o) {
+        if (!(o instanceof Item item)) return false;
+
+        return getId().equals(item.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return getId().hashCode();
     }
 }
