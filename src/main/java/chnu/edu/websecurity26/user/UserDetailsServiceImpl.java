@@ -30,7 +30,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @PostConstruct
     void init() {
-        User user = User.builder()
+        User john = User.builder()
                 .id("1")
                 .firstName("John")
                 .lastName("Smith")
@@ -40,7 +40,19 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                 .accountLocked(false)
                 .roles(List.of(Role.ADMIN))
                 .build();
-        repository.save(user);
+        repository.save(john);
+
+        User tom = User.builder()
+                .id("2")
+                .firstName("Tom")
+                .lastName("Thompson")
+                .email("tom@mail.com")
+                .password(passwordEncoder.encode("user"))
+                .enabled(true)
+                .accountLocked(false)
+                .roles(List.of(Role.USER))
+                .build();
+        repository.save(tom);
     }
 
     @Override

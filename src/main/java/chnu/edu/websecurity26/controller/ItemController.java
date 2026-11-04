@@ -50,7 +50,7 @@ public class ItemController {
 
 
     //----------------------------------------------------
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("hello/admin")
     public String helloAdmin() {
         return "Hello Admin!";
@@ -61,12 +61,12 @@ public class ItemController {
         return "Hello Unknown!";
     }
 
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasAuthority('USER')")
     @GetMapping("/hello/user")
     public String hello() { return "Hello!, user"; }
 
 
-    @PreAuthorize("hasAnyRole('ADMIN', 'SUPERADMIN')")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'SUPERADMIN')")
     @GetMapping("/hello/man")
     public String helloMan() { return "Hello, man!"; }
 
