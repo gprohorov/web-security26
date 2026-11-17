@@ -13,13 +13,20 @@ import chnu.edu.websecurity26.model.Item;
 import chnu.edu.websecurity26.repository.ItemRepository;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j;
+import lombok.extern.log4j.Log4j2;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Log4j2
 public class ItemService {
 
     private final ItemRepository itemRepository;
@@ -62,6 +69,16 @@ public class ItemService {
    }
 
    public void deleteItem(String id){
+        String username = "";
+       Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+       if (authentication == null ||
+               !authentication.isAuthenticated() ||
+               authentication instanceof AnonymousAuthenticationToken) {
+           username = "unknown";
+       }
+        username = authentication.getName();
+       Item item = this.getItem(id);
+        log.info(item.toString() + " was deleted by " + username);
         itemRepository.deleteById(id);
    }
 }
